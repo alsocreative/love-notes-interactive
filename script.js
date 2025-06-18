@@ -16,10 +16,21 @@ class Paper {
   rotating = false;
 
   init(paper) {
-    // Add initial random position
-    this.currentPaperX = (Math.random() - 0.5) * 200;
-    this.currentPaperY = (Math.random() - 0.5) * 200;
-    paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
+    // Get initial rotation from CSS instead of random
+    const computedStyle = window.getComputedStyle(paper);
+    const matrix = computedStyle.transform;
+    if (matrix !== 'none') {
+      const values = matrix.split('(')[1].split(')')[0].split(',');
+      const a = values[0];
+      const b = values[1];
+      this.rotation = Math.round(Math.atan2(b, a) * (180/Math.PI));
+    } else {
+      this.rotation = Math.random() * 20 - 10;
+    }
+
+    // Start with centered position (CSS handles initial placement)
+    this.currentPaperX = 0;
+    this.currentPaperY = 0;
 
     // Mouse move handler
     document.addEventListener('mousemove', (e) => {
@@ -33,8 +44,9 @@ class Paper {
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
         
-        this.velX = this.mouseX - this.prevMouseX;
-        this.velY = this.mouseY - this.prevMouseY;
+        // Smoother velocity calculation with interpolation
+        this.velX = (this.mouseX - this.prevMouseX) * 0.8;
+        this.velY = (this.mouseY - this.prevMouseY) * 0.8;
       }
         
       const dirX = e.clientX - this.mouseTouchX;
@@ -54,11 +66,18 @@ class Paper {
         if(!this.rotating) {
           this.currentPaperX += this.velX;
           this.currentPaperY += this.velY;
+          
+          // Add subtle rotation during drag for natural feel
+          const moveRotation = (this.velX * 0.05);
+          const finalRotation = this.rotation + moveRotation;
+          
+          // Use requestAnimationFrame for smoother rendering
+          requestAnimationFrame(() => {
+            paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${finalRotation}deg) scale(1.05)`;
+          });
         }
         this.prevMouseX = this.mouseX;
         this.prevMouseY = this.mouseY;
-
-        paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
       }
     })
 
@@ -75,14 +94,14 @@ class Paper {
       paper.style.zIndex = highestZ;
       highestZ += 1;
       
-      // Add grab effect
-      paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg) scale(1.02)`;
-      
+      // Add grab effect with better initial values
       if(e.button === 0) {
-        this.mouseTouchX = this.mouseX;
-        this.mouseTouchY = this.mouseY;
-        this.prevMouseX = this.mouseX;
-        this.prevMouseY = this.mouseY;
+        this.mouseTouchX = e.clientX;
+        this.mouseTouchY = e.clientY;
+        this.prevMouseX = e.clientX;
+        this.prevMouseY = e.clientY;
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
       }
       if(e.button === 2) {
         this.rotating = true;
@@ -92,9 +111,17 @@ class Paper {
     // Mouse up handler
     window.addEventListener('mouseup', () => {
       if(this.holdingPaper) {
+        // Smooth settle animation
+        paper.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg) scale(1)`;
+        
         document.body.classList.remove('dragging');
         paper.classList.remove('dragging');
+        
+        // Reset transition after animation
+        setTimeout(() => {
+          paper.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }, 300);
       }
       this.holdingPaper = false;
       this.rotating = false;
@@ -126,8 +153,9 @@ class Paper {
       this.mouseX = touch.clientX;
       this.mouseY = touch.clientY;
       
-      this.velX = this.mouseX - this.prevMouseX;
-      this.velY = this.mouseY - this.prevMouseY;
+      // Smoother touch velocity
+      this.velX = (this.mouseX - this.prevMouseX) * 0.8;
+      this.velY = (this.mouseY - this.prevMouseY) * 0.8;
       
       this.currentPaperX += this.velX;
       this.currentPaperY += this.velY;
@@ -135,13 +163,27 @@ class Paper {
       this.prevMouseX = this.mouseX;
       this.prevMouseY = this.mouseY;
       
-      paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
+      // Add rotation during touch drag
+      const moveRotation = (this.velX * 0.05);
+      const finalRotation = this.rotation + moveRotation;
+      
+      requestAnimationFrame(() => {
+        paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${finalRotation}deg) scale(1.05)`;
+      });
     });
 
     document.addEventListener('touchend', () => {
       if(this.holdingPaper) {
+        // Smooth settle for touch
+        paper.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg) scale(1)`;
+        
         document.body.classList.remove('dragging');
         paper.classList.remove('dragging');
+        
+        setTimeout(() => {
+          paper.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }, 300);
       }
       this.holdingPaper = false;
       this.rotating = false;
@@ -187,22 +229,36 @@ class Paper {
       }
       
       if (moved) {
+        paper.style.transition = 'transform 0.2s ease-out';
         paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
+        setTimeout(() => {
+          paper.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }, 200);
       }
     });
 
     // Double click to reset position
     paper.addEventListener('dblclick', () => {
-      this.currentPaperX = (Math.random() - 0.5) * 200;
-      this.currentPaperY = (Math.random() - 0.5) * 200;
-      this.rotation = Math.random() * 30 - 15;
+      // Reset to original CSS position
+      this.currentPaperX = 0;
+      this.currentPaperY = 0;
       
-      paper.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      // Get original rotation from CSS class
+      const computedStyle = window.getComputedStyle(paper);
+      const matrix = computedStyle.transform;
+      if (matrix !== 'none') {
+        const values = matrix.split('(')[1].split(')')[0].split(',');
+        const a = values[0];
+        const b = values[1];
+        this.rotation = Math.round(Math.atan2(b, a) * (180/Math.PI));
+      }
+      
+      paper.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
       
       setTimeout(() => {
-        paper.style.transition = '';
-      }, 500);
+        paper.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      }, 600);
     });
   }
 }

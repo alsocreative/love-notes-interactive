@@ -12,6 +12,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
   height: 100vh;
   display: flex;
@@ -22,6 +27,7 @@ body {
   overflow: hidden;
   font-family: 'Dancing Script', cursive;
   position: relative;
+  scroll-behavior: smooth;
 }
 
 /* Add a subtle pattern overlay */
@@ -82,7 +88,7 @@ body::before {
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
   position: absolute;
   cursor: grab;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   min-width: 250px;
@@ -94,19 +100,91 @@ body::before {
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+  will-change: transform;
+  transform-origin: center;
+  left: 50%;
+  top: 50%;
+  margin-left: -125px;
+  margin-top: -100px;
 }
 
 .paper:hover {
-  transform: rotateZ(-5deg) translateY(-5px);
+  transform: rotateZ(-5deg) translateY(-8px) scale(1.02);
   box-shadow: 
-    0 25px 50px rgba(0, 0, 0, 0.15),
-    0 15px 30px rgba(0, 0, 0, 0.1),
+    0 30px 60px rgba(0, 0, 0, 0.15),
+    0 20px 40px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .paper:active {
   cursor: grabbing;
-  transform: rotateZ(-5deg) scale(1.02);
+  transform: rotateZ(-5deg) scale(1.05);
+  transition: transform 0.1s ease-out;
+}
+
+/* Individual paper positioning and tilting */
+.paper:nth-child(1) { /* Heart paper */
+  transform: rotateZ(8deg);
+  left: 45%;
+  top: 40%;
+}
+
+.paper:nth-child(2) { /* First love note */
+  transform: rotateZ(-12deg);
+  left: 35%;
+  top: 50%;
+}
+
+.paper:nth-child(3) { /* Sweet memory */
+  transform: rotateZ(15deg);
+  left: 60%;
+  top: 35%;
+}
+
+.paper:nth-child(4) { /* Adorable you */
+  transform: rotateZ(-8deg);
+  left: 55%;
+  top: 60%;
+}
+
+.paper:nth-child(5) { /* Special note */
+  transform: rotateZ(10deg);
+  left: 40%;
+  top: 65%;
+}
+
+.paper:nth-child(6) { /* Daily reminder */
+  transform: rotateZ(-15deg);
+  left: 65%;
+  top: 45%;
+}
+
+.paper:nth-child(7) { /* Instructions */
+  transform: rotateZ(5deg);
+  left: 30%;
+  top: 35%;
+}
+
+/* Hover effects maintain individual tilts */
+.paper:nth-child(1):hover { transform: rotateZ(8deg) translateY(-8px) scale(1.02); }
+.paper:nth-child(2):hover { transform: rotateZ(-12deg) translateY(-8px) scale(1.02); }
+.paper:nth-child(3):hover { transform: rotateZ(15deg) translateY(-8px) scale(1.02); }
+.paper:nth-child(4):hover { transform: rotateZ(-8deg) translateY(-8px) scale(1.02); }
+.paper:nth-child(5):hover { transform: rotateZ(10deg) translateY(-8px) scale(1.02); }
+.paper:nth-child(6):hover { transform: rotateZ(-15deg) translateY(-8px) scale(1.02); }
+.paper:nth-child(7):hover { transform: rotateZ(5deg) translateY(-8px) scale(1.02); }
+
+/* Smooth dragging state */
+.paper.dragging {
+  transition: none !important;
+  z-index: 1000;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.paper.dragging:hover {
+  transform: none;
 }
 
 /* Paper header */
@@ -163,12 +241,21 @@ body::before {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  animation: heartbeat 2s ease-in-out infinite;
+  animation: heartbeat 3s ease-in-out infinite;
+  left: 48%;
+  top: 42%;
+  margin-left: -100px;
+  margin-top: -100px;
+  transform: rotateZ(8deg);
 }
 
 @keyframes heartbeat {
-  0%, 100% { transform: rotateZ(-5deg) scale(1); }
-  50% { transform: rotateZ(-5deg) scale(1.05); }
+  0%, 100% { transform: rotateZ(8deg) scale(1); }
+  50% { transform: rotateZ(8deg) scale(1.03); }
+}
+
+.paper.heart:hover {
+  transform: rotateZ(8deg) translateY(-8px) scale(1.05) !important;
 }
 
 .heart-content {
