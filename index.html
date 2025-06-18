@@ -3,14 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Love Letters ❤️ - Interactive Paper Notes</title>
+  
+  <!-- SEO Meta Tags -->
+  <title>Interactive Love Letters ❤️ - Romantic Digital Notes & Messages</title>
+  <meta name="description" content="Express your love with beautiful interactive digital love letters. Drag, rotate, and personalize romantic notes with photos and heartfelt messages. Perfect for Valentine's Day, anniversaries, or any romantic occasion.">
+  <meta name="keywords" content="love letters, romantic messages, interactive cards, valentine's day, digital romance, love notes, romantic website, anniversary gifts, personalized messages">
+  <meta name="author" content="Love Letters Interactive">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:title" content="Interactive Love Letters ❤️ - Romantic Digital Notes">
+  <meta property="og:description" content="Create and share beautiful interactive love letters with photos and heartfelt messages. Perfect for expressing your feelings in a unique digital way.">
+  <meta property="og:image" content="images/og-image.jpg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="">
+  <meta property="twitter:title" content="Interactive Love Letters ❤️ - Romantic Digital Notes">
+  <meta property="twitter:description" content="Create and share beautiful interactive love letters with photos and heartfelt messages.">
+  <meta property="twitter:image" content="images/twitter-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+  
+  <!-- Fonts and Icons -->
   <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Short+Stack&family=Homemade+Apple&family=Dancing+Script:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="./style.css">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Interactive Love Letters",
+    "description": "Create beautiful interactive digital love letters with photos and romantic messages",
+    "url": "",
+    "applicationCategory": "Entertainment",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Love Letters Interactive"
+    }
+  }
+  </script>
 </head>
 <body>
+<!-- Skip Navigation Link for Accessibility -->
+<a href="#main-content" class="skip-nav">Skip to main content</a>
+
+<!-- Header with hidden title for SEO -->
+<header class="sr-only">
+  <h1>Interactive Love Letters - Romantic Digital Messages</h1>
+</header>
+
+<!-- Main Content Area -->
+<main id="main-content" role="main" aria-label="Interactive love letters workspace">
+
 <!-- Floating hearts animation -->
-<div class="floating-hearts">
+<div class="floating-hearts" aria-hidden="true">
   <i class="fas fa-heart heart-1"></i>
   <i class="fas fa-heart heart-2"></i>
   <i class="fas fa-heart heart-3"></i>
@@ -20,103 +78,123 @@
 </div>
 
 <!-- Interactive love papers -->
-<div class="paper heart">
+<article class="paper heart" role="button" tabindex="0" aria-label="Draggable heart note - Click and drag to move">
   <div class="heart-content">
-    <i class="fas fa-heart main-heart"></i>
+    <i class="fas fa-heart main-heart" aria-hidden="true"></i>
     <p class="heart-text">Click & Drag Me!</p>
   </div>
-</div>
+</article>
 
-<div class="paper image love-note">
+<article class="paper image love-note" role="button" tabindex="0" aria-label="Love confession note with photo">
   <div class="paper-header">
-    <i class="fas fa-thumbtack pin"></i>
+    <i class="fas fa-thumbtack pin" aria-hidden="true"></i>
     <span class="note-title">My Feelings</span>
   </div>
-  <p class="handwriting">I've fallen deeply in</p>
-  <p class="handwriting highlight">Love with You 😍</p>
-  <div class="image-container">
-    <img src="images/1.jpeg" alt="Beautiful moment" />
-    <div class="image-overlay">
-      <i class="fas fa-heart overlay-heart"></i>
+  <div class="note-content">
+    <p class="handwriting">I've fallen deeply in</p>
+    <p class="handwriting highlight">Love with You 😍</p>
+    <div class="image-container">
+      <img src="images/1.jpeg" alt="Beautiful romantic moment together" loading="lazy" />
+      <div class="image-overlay" aria-hidden="true">
+        <i class="fas fa-heart overlay-heart"></i>
+      </div>
     </div>
   </div>
-</div>
+</article>
 
-<div class="paper image love-note">
+<article class="paper image love-note" role="button" tabindex="0" aria-label="Sweet memory note with photo">
   <div class="paper-header">
-    <i class="fas fa-thumbtack pin"></i>
+    <i class="fas fa-thumbtack pin" aria-hidden="true"></i>
     <span class="note-title">Sweet Memory</span>
   </div>
-  <p class="handwriting">Every moment with you</p>
-  <p class="handwriting">is precious ✨</p>
-  <div class="image-container">
-    <img src="images/2.jpeg" alt="Sweet memory" />
-    <div class="image-overlay">
-      <i class="fas fa-sparkle overlay-heart"></i>
+  <div class="note-content">
+    <p class="handwriting">Every moment with you</p>
+    <p class="handwriting">is precious ✨</p>
+    <div class="image-container">
+      <img src="images/2.jpeg" alt="Precious memory captured in a sweet moment" loading="lazy" />
+      <div class="image-overlay" aria-hidden="true">
+        <i class="fas fa-sparkle overlay-heart"></i>
+      </div>
     </div>
   </div>
-</div>
+</article>
 
-<div class="paper image love-note">
+<article class="paper image love-note" role="button" tabindex="0" aria-label="Adorable compliment note with photo">
   <div class="paper-header">
-    <i class="fas fa-thumbtack pin"></i>
+    <i class="fas fa-thumbtack pin" aria-hidden="true"></i>
     <span class="note-title">Adorable You</span>
   </div>
-  <p class="handwriting">How can someone be</p>
-  <p class="handwriting highlight">so incredibly cute? ❤️</p>
-  <div class="image-container">
-    <img src="images/3.jpg" alt="Cute moment" />
-    <div class="image-overlay">
-      <i class="fas fa-heart overlay-heart"></i>
+  <div class="note-content">
+    <p class="handwriting">How can someone be</p>
+    <p class="handwriting highlight">so incredibly cute? ❤️</p>
+    <div class="image-container">
+      <img src="images/3.jpg" alt="Adorable and cute moment that melts the heart" loading="lazy" />
+      <div class="image-overlay" aria-hidden="true">
+        <i class="fas fa-heart overlay-heart"></i>
+      </div>
     </div>
   </div>
-</div>
+</article>
 
-<div class="paper red special-note">
+<article class="paper red special-note" role="button" tabindex="0" aria-label="Special favorite person note">
   <div class="paper-header">
-    <i class="fas fa-star pin-star"></i>
+    <i class="fas fa-star pin-star" aria-hidden="true"></i>
     <span class="note-title special">Special Note</span>
   </div>
-  <p class="p1 handwriting-large">You are my</p>
-  <p class="p2 handwriting-large highlight">Favorite Person 😍</p>
-  <div class="decorative-border"></div>
-</div>
+  <div class="note-content">
+    <p class="p1 handwriting-large">You are my</p>
+    <p class="p2 handwriting-large highlight">Favorite Person 😍</p>
+    <div class="decorative-border" aria-hidden="true"></div>
+  </div>
+</article>
 
-<div class="paper compliment-note">
+<article class="paper compliment-note" role="button" tabindex="0" aria-label="Daily compliment reminder note">
   <div class="paper-header">
-    <i class="fas fa-thumbtack pin"></i>
+    <i class="fas fa-thumbtack pin" aria-hidden="true"></i>
     <span class="note-title">Daily Reminder</span>
   </div>
-  <p class="p1 handwriting">You are beautiful,</p>
-  <p class="p1 handwriting">amazing, and</p>
-  <p class="p1 handwriting">absolutely <span class="love-text">wonderful ❤️</span></p>
-  <div class="sticker-collection">
-    <span class="sticker">⭐</span>
-    <span class="sticker">💫</span>
-    <span class="sticker">✨</span>
+  <div class="note-content">
+    <p class="p1 handwriting">You are beautiful,</p>
+    <p class="p1 handwriting">amazing, and</p>
+    <p class="p1 handwriting">absolutely <span class="love-text">wonderful ❤️</span></p>
+    <div class="sticker-collection" aria-hidden="true">
+      <span class="sticker">⭐</span>
+      <span class="sticker">💫</span>
+      <span class="sticker">✨</span>
+    </div>
   </div>
-</div>
+</article>
 
-<div class="paper instruction-note">
+<article class="paper instruction-note" role="button" tabindex="0" aria-label="Instructions for using the interactive love letters">
   <div class="paper-header">
-    <i class="fas fa-paper-plane pin"></i>
+    <i class="fas fa-paper-plane pin" aria-hidden="true"></i>
     <span class="note-title">Instructions</span>
   </div>
-  <p class="p1 handwriting">💡 Drag the papers to move them around!</p>
-  <p class="p1 handwriting">Right-click to rotate! ↻</p>
-  <div class="interactive-demo">
-    <i class="fas fa-mouse-pointer demo-cursor"></i>
+  <div class="note-content">
+    <p class="p1 handwriting">💡 Drag the papers to move them around!</p>
+    <p class="p1 handwriting">Right-click to rotate! ↻</p>
+    <div class="interactive-demo" aria-hidden="true">
+      <i class="fas fa-mouse-pointer demo-cursor"></i>
+    </div>
   </div>
-</div>
+</article>
 
-<!-- Music toggle button -->
-<button class="music-toggle" id="musicToggle">
-  <i class="fas fa-music"></i>
-</button>
+</main>
 
-<!-- Audio element for background music -->
-<audio id="backgroundMusic" loop>
-  <source src="https://www.soundjay.com/misc/sounds/romantic-music.mp3" type="audio/mpeg">
+<!-- Music Controls -->
+<aside class="music-controls" aria-label="Background music controls">
+  <button class="music-toggle" id="musicToggle" aria-label="Toggle background music">
+    <i class="fas fa-music" aria-hidden="true"></i>
+  </button>
+  <div class="music-notification" id="musicNotification">
+    🎵 Click to start romantic music
+  </div>
+</aside>
+
+<!-- Hidden Audio Element -->
+<audio id="backgroundMusic" loop autoplay preload="auto" aria-label="Romantic background music">
+  <source src="./assets/music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
 </audio>
   <script  src="./script.js"></script>
 

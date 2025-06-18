@@ -23,6 +23,12 @@ class Paper {
 
     // Mouse move handler
     document.addEventListener('mousemove', (e) => {
+      // Prevent text selection during drag
+      if(this.holdingPaper) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      
       if(!this.rotating) {
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
@@ -61,6 +67,11 @@ class Paper {
       if(this.holdingPaper) return; 
       this.holdingPaper = true;
       
+      // Prevent text selection
+      e.preventDefault();
+      document.body.classList.add('dragging');
+      paper.classList.add('dragging');
+      
       paper.style.zIndex = highestZ;
       highestZ += 1;
       
@@ -82,6 +93,8 @@ class Paper {
     window.addEventListener('mouseup', () => {
       if(this.holdingPaper) {
         paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg) scale(1)`;
+        document.body.classList.remove('dragging');
+        paper.classList.remove('dragging');
       }
       this.holdingPaper = false;
       this.rotating = false;
@@ -126,6 +139,10 @@ class Paper {
     });
 
     document.addEventListener('touchend', () => {
+      if(this.holdingPaper) {
+        document.body.classList.remove('dragging');
+        paper.classList.remove('dragging');
+      }
       this.holdingPaper = false;
       this.rotating = false;
     });
@@ -133,6 +150,45 @@ class Paper {
     // Prevent context menu on right click
     paper.addEventListener('contextmenu', (e) => {
       e.preventDefault();
+    });
+
+    // Keyboard support for accessibility
+    paper.addEventListener('keydown', (e) => {
+      const step = 20;
+      let moved = false;
+      
+      switch(e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          this.currentPaperY -= step;
+          moved = true;
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          this.currentPaperY += step;
+          moved = true;
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          this.currentPaperX -= step;
+          moved = true;
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          this.currentPaperX += step;
+          moved = true;
+          break;
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          // Simulate double click for reset
+          paper.dispatchEvent(new Event('dblclick'));
+          break;
+      }
+      
+      if (moved) {
+        paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
+      }
     });
 
     // Double click to reset position
@@ -163,19 +219,48 @@ const musicToggle = document.getElementById('musicToggle');
 const backgroundMusic = document.getElementById('backgroundMusic');
 let isPlaying = false;
 
+// Function to start music
+function startMusic() {
+  backgroundMusic.play().then(() => {
+    isPlaying = true;
+    musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+    musicToggle.style.opacity = '1';
+    console.log('🎵 Background music started');
+  }).catch(e => {
+    console.log('🔇 Autoplay blocked by browser. Click the music button to start.');
+    // Show a subtle notification that user can click to start music
+    musicToggle.style.animation = 'pulse 2s infinite';
+    musicToggle.title = 'Click to start romantic music 🎵';
+  });
+}
+
+// Try to autoplay when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  // Small delay to ensure everything is loaded
+  setTimeout(() => {
+    startMusic();
+  }, 1000);
+});
+
+// Also try when user first interacts with the page
+document.addEventListener('click', function autoplayOnFirstClick() {
+  if (!isPlaying) {
+    startMusic();
+  }
+  // Remove this listener after first attempt
+  document.removeEventListener('click', autoplayOnFirstClick);
+}, { once: true });
+
 musicToggle.addEventListener('click', () => {
   if (isPlaying) {
     backgroundMusic.pause();
     musicToggle.innerHTML = '<i class="fas fa-music"></i>';
     musicToggle.style.opacity = '0.7';
+    musicToggle.style.animation = '';
+    isPlaying = false;
   } else {
-    backgroundMusic.play().catch(e => {
-      console.log('Audio play failed:', e);
-    });
-    musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-    musicToggle.style.opacity = '1';
+    startMusic();
   }
-  isPlaying = !isPlaying;
 });
 
 // Add keyboard shortcuts
@@ -290,4 +375,40 @@ setTimeout(() => {
   console.log('• Press "R" to randomize all positions');
   console.log('• Press "C" to center all papers');
   console.log('• Press Space to toggle music');
+  console.log('• Use arrow keys to move focused paper');
 }, 1000);
+
+// Global prevention of text selection during any drag operation
+document.addEventListener('selectstart', (e) => {
+  if (document.body.classList.contains('dragging')) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+document.addEventListener('dragstart', (e) => {
+  if (document.body.classList.contains('dragging')) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+// Prevent text selection on mobile during touch
+document.addEventListener('touchstart', (e) => {
+  if (e.target.closest('.paper')) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Enhanced text selection prevention
+document.onselectstart = function() {
+  if (document.body.classList.contains('dragging')) {
+    return false;
+  }
+};
+
+document.onmousedown = function() {
+  if (document.body.classList.contains('dragging')) {
+    return false;
+  }
+};
