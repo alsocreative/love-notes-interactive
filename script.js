@@ -217,7 +217,16 @@ papers.forEach(paper => {
 // Music toggle functionality
 const musicToggle = document.getElementById('musicToggle');
 const backgroundMusic = document.getElementById('backgroundMusic');
+const musicNotification = document.getElementById('musicNotification');
 let isPlaying = false;
+
+// Function to show notification
+function showMusicNotification() {
+  musicNotification.classList.add('show');
+  setTimeout(() => {
+    musicNotification.classList.remove('show');
+  }, 4000); // Hide after 4 seconds
+}
 
 // Function to start music
 function startMusic() {
@@ -225,12 +234,15 @@ function startMusic() {
     isPlaying = true;
     musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
     musicToggle.style.opacity = '1';
+    musicToggle.style.animation = '';
+    musicNotification.classList.remove('show');
     console.log('🎵 Background music started');
   }).catch(e => {
     console.log('🔇 Autoplay blocked by browser. Click the music button to start.');
-    // Show a subtle notification that user can click to start music
+    // Show visual indicators
     musicToggle.style.animation = 'pulse 2s infinite';
     musicToggle.title = 'Click to start romantic music 🎵';
+    showMusicNotification();
   });
 }
 
