@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Letters ❤️ - Interactive Paper Notes</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Short+Stack&family=Homemade+Apple&family=Dancing+Script:wght@400;600;700&family=Caveat:wght@400;600;700&display=swap'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- Floating hearts animation -->
+<div class="floating-hearts">
+  <i class="fas fa-heart heart-1"></i>
+  <i class="fas fa-heart heart-2"></i>
+  <i class="fas fa-heart heart-3"></i>
+  <i class="fas fa-heart heart-4"></i>
+  <i class="fas fa-heart heart-5"></i>
+  <i class="fas fa-heart heart-6"></i>
+</div>
+
+<!-- Interactive love papers -->
+<div class="paper heart">
+  <div class="heart-content">
+    <i class="fas fa-heart main-heart"></i>
+    <p class="heart-text">Click & Drag Me!</p>
+  </div>
+</div>
+
+<div class="paper image love-note">
+  <div class="paper-header">
+    <i class="fas fa-thumbtack pin"></i>
+    <span class="note-title">My Feelings</span>
+  </div>
+  <p class="handwriting">I've fallen deeply in</p>
+  <p class="handwriting highlight">Love with You 😍</p>
+  <div class="image-container">
+    <img src="images/1.jpeg" alt="Beautiful moment" />
+    <div class="image-overlay">
+      <i class="fas fa-heart overlay-heart"></i>
+    </div>
+  </div>
+</div>
+
+<div class="paper image love-note">
+  <div class="paper-header">
+    <i class="fas fa-thumbtack pin"></i>
+    <span class="note-title">Sweet Memory</span>
+  </div>
+  <p class="handwriting">Every moment with you</p>
+  <p class="handwriting">is precious ✨</p>
+  <div class="image-container">
+    <img src="images/2.jpeg" alt="Sweet memory" />
+    <div class="image-overlay">
+      <i class="fas fa-sparkle overlay-heart"></i>
+    </div>
+  </div>
+</div>
+
+<div class="paper image love-note">
+  <div class="paper-header">
+    <i class="fas fa-thumbtack pin"></i>
+    <span class="note-title">Adorable You</span>
+  </div>
+  <p class="handwriting">How can someone be</p>
+  <p class="handwriting highlight">so incredibly cute? ❤️</p>
+  <div class="image-container">
+    <img src="images/3.jpg" alt="Cute moment" />
+    <div class="image-overlay">
+      <i class="fas fa-heart overlay-heart"></i>
+    </div>
+  </div>
+</div>
+
+<div class="paper red special-note">
+  <div class="paper-header">
+    <i class="fas fa-star pin-star"></i>
+    <span class="note-title special">Special Note</span>
+  </div>
+  <p class="p1 handwriting-large">You are my</p>
+  <p class="p2 handwriting-large highlight">Favorite Person 😍</p>
+  <div class="decorative-border"></div>
+</div>
+
+<div class="paper compliment-note">
+  <div class="paper-header">
+    <i class="fas fa-thumbtack pin"></i>
+    <span class="note-title">Daily Reminder</span>
+  </div>
+  <p class="p1 handwriting">You are beautiful,</p>
+  <p class="p1 handwriting">amazing, and</p>
+  <p class="p1 handwriting">absolutely <span class="love-text">wonderful ❤️</span></p>
+  <div class="sticker-collection">
+    <span class="sticker">⭐</span>
+    <span class="sticker">💫</span>
+    <span class="sticker">✨</span>
+  </div>
+</div>
+
+<div class="paper instruction-note">
+  <div class="paper-header">
+    <i class="fas fa-paper-plane pin"></i>
+    <span class="note-title">Instructions</span>
+  </div>
+  <p class="p1 handwriting">💡 Drag the papers to move them around!</p>
+  <p class="p1 handwriting">Right-click to rotate! ↻</p>
+  <div class="interactive-demo">
+    <i class="fas fa-mouse-pointer demo-cursor"></i>
+  </div>
+</div>
+
+<!-- Music toggle button -->
+<button class="music-toggle" id="musicToggle">
+  <i class="fas fa-music"></i>
+</button>
+
+<!-- Audio element for background music -->
+<audio id="backgroundMusic" loop>
+  <source src="https://www.soundjay.com/misc/sounds/romantic-music.mp3" type="audio/mpeg">
+</audio>
+  <script  src="./script.js"></script>
+
+</body>
+</html>
